@@ -107,17 +107,17 @@ permalink_defaults:
 <p>1.把自己刚刚建立的 github page 的 repo 复制到本地。</p>
 <pre><code>cd c:\blog\myBlog
 git clone https://github.com/wodeboke/wodeboke.github.io.git deploy
-</code></pre><p>清除现有博客生成文件并重新生成，然后把所有 public 文件夹下的内容复制粘贴到上一步生成的 deploy文件夹</p>
+</code></pre><p>2.清除现有博客生成文件并重新生成，然后把所有 public 文件夹下的内容复制粘贴到上一步生成的 deploy文件夹</p>
 <pre><code>hexo clean
 hexo generate
 xcopy /e &quot;public&quot; &quot;deploy&quot;
-</code></pre><p>把 deploy 文件夹的内容提交到 github 上</p>
+</code></pre><p>3.把 deploy 文件夹的内容提交到 github 上</p>
 <pre><code>cd deploy
 git add .
 git commit -m &quot;First Commit&quot;
 git push origin master
-</code></pre><p>现在打开自己的 github page (wodeboke.github.io, 我的是 stevan0102.github.io)，你就能看到自己新建的博客了。</p>
-<p>当然这个办法的问题就是每次我们做出一点更改，都需要打开 cmd 然后输入一堆指令。下面我们就写一个批次处理文件来加快这个过程。</p>
+</code></pre><p>4.现在打开自己的 github page (wodeboke.github.io, 我的是 stevan0102.github.io)，你就能看到自己新建的博客了。</p>
+<p>5.当然这个办法的问题就是每次我们做出一点更改，都需要打开 cmd 然后输入一堆指令。下面我们就写一个批次处理文件来加快这个过程。</p>
 <pre><code>cd c:\blog\myBlog
 </code></pre><p>新建一个文件，命名为 deploy.bat 。打开文件然后把下面这行复制粘贴进去。要保证它们必须是在同一行中，不要有任何换行。</p>
 <pre><code>hexo clean &amp; hexo generate &amp; xcopy /e &quot;public&quot; &quot;deploy&quot; &amp; cd deploy &amp; git add . &amp; git commit -m &apos;update&apos; &amp; git push origin master
@@ -156,7 +156,7 @@ fb_app_id:
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://github.com/devinyeen/devinyeen.github.io/2018/05/04/deploy-hexo-on-github-page-chinese/" data-id="cjgqsaign0000i0nrbwk6s7u3" class="article-share-link">Share</a>
+      <a data-url="https://github.com/devinyeen/devinyeen.github.io/2018/05/04/deploy-hexo-on-github-page-chinese/" data-id="cjgqsd0va00010onri61zkfi2" class="article-share-link">Share</a>
       
       
     </footer>
@@ -201,7 +201,7 @@ fb_app_id:
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://github.com/devinyeen/devinyeen.github.io/2018/05/03/hello-world/" data-id="cjgqsaih30001i0nrm36g1dcx" class="article-share-link">Share</a>
+      <a data-url="https://github.com/devinyeen/devinyeen.github.io/2018/05/03/hello-world/" data-id="cjgqsd0uu00000onrum7ec87x" class="article-share-link">Share</a>
       
       
     </footer>
