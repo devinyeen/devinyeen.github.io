@@ -65,9 +65,149 @@
       <div class="outer">
         <section id="main">
   
-    <article id="post-lambda_java8" class="article article-type-post" itemscope itemprop="blogPost">
+    <article id="post-lambda_java8_1" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/2018/06/14/lambda_java8/" class="article-date">
+    <a href="/2018/06/27/lambda_java8_1/" class="article-date">
+  <time datetime="2018-06-26T16:20:44.580Z" itemprop="datePublished">2018-06-27</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/06/27/lambda_java8_1/">lambda表达式（一）</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>分类： 语言</p>
+<hr>
+<h1 id="1-引入"><a href="#1-引入" class="headerlink" title="1. 引入"></a>1. 引入</h1><p>我们先看一个需求的实现，筛选一个列表中的绿苹果</p>
+<pre><code>// 判断绿苹果
+public static List&lt;Apple&gt; filterGreenApples(List&lt;Apple&gt; inventory) {
+    List&lt;Apple&gt; result = new ArrayList&lt;Apple&gt;();
+    for (Apple apple : inventory) {
+        if (&quot;green&quot;.equals(apple.getColor())) {
+            result.add(apple);
+        }
+    }
+    return result;
+}
+</code></pre><p>如果需求更进一步，颜色是变化的，需要根据颜色变化来筛选苹果</p>
+<pre><code>// 判断某种颜色的苹果
+public static List&lt;Apple&gt; filterColorApples(List&lt;Apple&gt; inventory, String color) {
+    List&lt;Apple&gt; result = new ArrayList&lt;Apple&gt;();
+    for (Apple apple : inventory) {
+        if (color.equals(apple.getColor())) {
+            result.add(apple);
+        }
+    }
+    return result;
+}
+</code></pre><p>再进一步，需要对重量进行筛选</p>
+<pre><code>// 判断某种重量的苹果
+public static List&lt;Apple&gt; filterWeightApples(List&lt;Apple&gt; inventory, int weight) {
+    List&lt;Apple&gt; result = new ArrayList&lt;Apple&gt;();
+    for (Apple apple : inventory) {
+        if (apple.getWeight() &gt; weight) {
+            result.add(apple);
+        }
+    }
+    return result;
+}
+</code></pre><p>上面的方式扩展性差，如果添加其他属性，不仅需要重新添加方法，还需要修改业务逻辑代码。</p>
+<p>我们可以使用策略模式来解决这个问题：</p>
+<pre><code>// 定义一个共通方法的接口
+public interface ApplePredicate {
+    boolean test(Apple apple);
+}
+
+// 下面三个类，根据不同的属性及要求实现接口方法
+public class AppleGreenColorPredicate implements ApplePredicate {
+    @Override
+    public boolean test(Apple apple) {
+        return apple.getColor().equals(&quot;green&quot;);
+    }
+}
+
+public class AppleHeavyWeightPredicate implements ApplePredicate {
+    @Override
+    public boolean test(Apple apple) {
+        return apple.getWeight() &gt; 150;
+    }
+}
+
+public class AppleRedAndHeavyPredicate implements ApplePredicate {
+    @Override
+    public boolean test(Apple apple) {
+        return apple.getColor().equals(&quot;red&quot;) &amp;&amp; apple.getWeight() &gt; 150;
+    }
+}
+
+// 方法接受接口类型参数，并调用实现的接口方法实现实际业务处理，如果添加其他属性，业务逻辑不需要修改，仅增加类并实现接口即可。
+public static List&lt;Apple&gt; filterApples(List&lt;Apple&gt; inventory, ApplePredicate p) {
+    List&lt;Apple&gt; result = new ArrayList&lt;Apple&gt;();
+    for (Apple apple : inventory) {
+        if (p.test(apple)) {
+            result.add(apple);
+        }
+    }
+    return result;
+}
+</code></pre><p>实际上看上面第二种方式还是有点啰嗦，随着属性的增加，会导致类的数目不断增长。</p>
+<p>在实际开发中还会用到匿名内部类</p>
+<pre><code>// 匿名内部类
+List&lt;Apple&gt; redApples2 = filterApples(inventory, new ApplePredicate() {
+    public boolean test(Apple a) {
+        return a.getColor().equals(&quot;red&quot;);
+    }
+});
+</code></pre><p>上述用法在Android的控件监听器实现中使用较多。</p>
+<h1 id="2-lambda表达式"><a href="#2-lambda表达式" class="headerlink" title="2. lambda表达式"></a>2. lambda表达式</h1><p>上述几种方法代码冗余，扩展性差，使用java8引入的lambda表达式结合泛型，可以解决此类问题，做如下修改：</p>
+<pre><code>// 定义一个共通方法的接口
+public interface Predicate&lt;T&gt; {
+    boolean test(T t);
+}
+
+// 业务逻辑基本相同，只是参数泛型化
+public static List&lt;T&gt; filterApples(List&lt;T&gt; inventory, Predicate&lt;T&gt; p) {
+    List&lt;T&gt; result = new ArrayList&lt;&gt;();
+    for (T t : inventory) {
+        if (p.test(t)) {
+            result.add(t);
+        }
+    }
+    return result;
+}
+
+// 使用lambda表达式如下，非常简洁
+List&lt;Apple&gt; redApples2Lambda = filterApples(inventory, (Apple apple) -&gt; &quot;red&quot;.equals(apple.getColor()));
+</code></pre><p>简单归纳下lambda表达式实现与运用：<br>1、定义有一个共通方法的接口；<br>2、传入接口，实现业务逻辑处理；<br>3、调用业务逻辑；</p>
+<p>如果我们需要添加对其他属性的处理，我们仅需实现3，前面1、2不需要额外操心。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://github.com/devinyeen/devinyeen.github.io/2018/06/27/lambda_java8_1/" data-id="cjivy0zv20002ssnrtt5nxhjf" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-lambda_java8_2" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/06/14/lambda_java8_2/" class="article-date">
   <time datetime="2018-06-14T15:33:28.136Z" itemprop="datePublished">2018-06-14</time>
 </a>
     
@@ -79,7 +219,7 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2018/06/14/lambda_java8/">lambda表达式（一）</a>
+      <a class="article-title" href="/2018/06/14/lambda_java8_2/">lambda表达式（二）</a>
     </h1>
   
 
@@ -89,7 +229,33 @@
       
         <p>分类： 语言</p>
 <hr>
-<h1 id="0-引入"><a href="#0-引入" class="headerlink" title="0. 引入"></a>0. 引入</h1><p>我们先看一个需求的实现，筛选一个列表中的绿苹果</p>
+<p>从前面一篇文章我们知道，一个lambda表达式类似如下：<br>    List<apple> redApples2Lambda = filterApples(inventory, <strong>(Apple apple) -&gt; “red”.equals(apple.getColor())</strong>);<br>那么在哪里及如何使用lambda表达式</apple></p>
+<h1 id="1-函数式接口"><a href="#1-函数式接口" class="headerlink" title="1. 函数式接口"></a>1. 函数式接口</h1><p>前面运用lambda表达式，我们线定义了一个共通方法的接口</p>
+<pre><code>public interface Predicate&lt;T&gt; {
+    boolean test(T t);
+}
+</code></pre><p>这就是一个函数式接口，它的特点是仅仅定义了一个抽象方法。<br>Java API中定义了很多函数式接口，如常用的Runnable、Comparator等，在jdk 1.8或以上版本，这些接口都有“@FunctionalInterface”的注解，表示他们是函数式接口。<br>我们来看下不同方式的示例代码:</p>
+<pre><code>// 业务代码
+public static void process(Runnable r) {
+    r.run();
+}
+
+// 第一种，匿名内部类
+Runnable r1 = new Runnable(){
+    public void run() {
+        System.out.println(&quot;Hello world 1&quot;);
+    }
+}
+// 第一种业务代码调用
+process(r1);
+
+// 第二种业务代码调用，lambda表达式
+Runnable r2 = () -&gt; System.out.println(&quot;Hello world 2&quot;);
+process(r2);
+
+// 第三种业务代码调用，直接使用lambda表达式
+process(() -&gt; System.out.println(&quot;Hello world 3&quot;));
+</code></pre><p>我们先看一个需求的实现，筛选一个列表中的绿苹果</p>
 <pre><code>// 判断绿苹果
 public static List&lt;Apple&gt; filterGreenApples(List&lt;Apple&gt; inventory) {
     List&lt;Apple&gt; result = new ArrayList&lt;Apple&gt;();
@@ -195,7 +361,7 @@ List&lt;Apple&gt; redApples2Lambda = filterApples(inventory, (Apple apple) -&gt;
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://github.com/devinyeen/devinyeen.github.io/2018/06/14/lambda_java8/" data-id="cjivw9z9b0000p8nrpg3j0osj" class="article-share-link">Share</a>
+      <a data-url="https://github.com/devinyeen/devinyeen.github.io/2018/06/14/lambda_java8_2/" data-id="cjivy0zvi0003ssnr8dyh4peu" class="article-share-link">Share</a>
       
       
     </footer>
@@ -305,7 +471,7 @@ $ hexo new first-post
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://github.com/devinyeen/devinyeen.github.io/2018/05/04/deploy-hexo-on-github-page-chinese/" data-id="cjivw9z9r0001p8nr93f2bd3t" class="article-share-link">Share</a>
+      <a data-url="https://github.com/devinyeen/devinyeen.github.io/2018/05/04/deploy-hexo-on-github-page-chinese/" data-id="cjivy0zv20001ssnrigozmtb8" class="article-share-link">Share</a>
       
       
     </footer>
@@ -350,7 +516,7 @@ $ hexo new first-post
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://github.com/devinyeen/devinyeen.github.io/2018/05/03/hello-world/" data-id="cjivw9z9r0002p8nraq04ahvy" class="article-share-link">Share</a>
+      <a data-url="https://github.com/devinyeen/devinyeen.github.io/2018/05/03/hello-world/" data-id="cjivy0zui0000ssnryjwks9cw" class="article-share-link">Share</a>
       
       
     </footer>
@@ -391,7 +557,11 @@ $ hexo new first-post
       <ul>
         
           <li>
-            <a href="/2018/06/14/lambda_java8/">lambda表达式（一）</a>
+            <a href="/2018/06/27/lambda_java8_1/">lambda表达式（一）</a>
+          </li>
+        
+          <li>
+            <a href="/2018/06/14/lambda_java8_2/">lambda表达式（二）</a>
           </li>
         
           <li>
