@@ -14,7 +14,7 @@
 <meta property="og:site_name" content="Devin&#39;s Blog">
 <meta property="og:description" content="分类： 语言  0. 引入我们先看一个需求的实现，筛选一个列表中的绿苹果 // 判断绿苹果 public static List&amp;lt;Apple&amp;gt; filterGreenApples(List&amp;lt;Apple&amp;gt; inventory) {     List&amp;lt;Apple&amp;gt; result = new ArrayList&amp;lt;Apple&amp;gt;();     for (App">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2018-06-26T15:53:38.874Z">
+<meta property="og:updated_time" content="2018-06-26T15:55:14.423Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="java8引入的lambda表达式">
 <meta name="twitter:description" content="分类： 语言  0. 引入我们先看一个需求的实现，筛选一个列表中的绿苹果 // 判断绿苹果 public static List&amp;lt;Apple&amp;gt; filterGreenApples(List&amp;lt;Apple&amp;gt; inventory) {     List&amp;lt;Apple&amp;gt; result = new ArrayList&amp;lt;Apple&amp;gt;();     for (App">
@@ -99,9 +99,29 @@ public static List&lt;Apple&gt; filterGreenApples(List&lt;Apple&gt; inventory) {
     }
     return result;
 }
-</code></pre><p>如果需求更进一步，颜色是变化的，需要根据颜色变化来筛选苹果<br>    // 判断某种颜色的苹果<br>    public static List<apple> filterColorApples(List<apple> inventory, String color) {<br>        List<apple> result = new ArrayList<apple>();<br>        for (Apple apple : inventory) {<br>            if (color.equals(apple.getColor())) {<br>                result.add(apple);<br>            }<br>        }<br>        return result;<br>    }</apple></apple></apple></apple></p>
-<p>再进一步，需要对重量进行筛选<br>    // 判断某种重量的苹果<br>    public static List<apple> filterWeightApples(List<apple> inventory, int weight) {<br>        List<apple> result = new ArrayList<apple>();<br>        for (Apple apple : inventory) {<br>            if (apple.getWeight() &gt; weight) {<br>                result.add(apple);<br>            }<br>        }<br>        return result;<br>    }</apple></apple></apple></apple></p>
-<p>上面的方式扩展性差，如果添加其他属性，不仅需要重新添加方法，还需要修改业务逻辑代码。</p>
+</code></pre><p>如果需求更进一步，颜色是变化的，需要根据颜色变化来筛选苹果</p>
+<pre><code>// 判断某种颜色的苹果
+public static List&lt;Apple&gt; filterColorApples(List&lt;Apple&gt; inventory, String color) {
+    List&lt;Apple&gt; result = new ArrayList&lt;Apple&gt;();
+    for (Apple apple : inventory) {
+        if (color.equals(apple.getColor())) {
+            result.add(apple);
+        }
+    }
+    return result;
+}
+</code></pre><p>再进一步，需要对重量进行筛选</p>
+<pre><code>// 判断某种重量的苹果
+public static List&lt;Apple&gt; filterWeightApples(List&lt;Apple&gt; inventory, int weight) {
+    List&lt;Apple&gt; result = new ArrayList&lt;Apple&gt;();
+    for (Apple apple : inventory) {
+        if (apple.getWeight() &gt; weight) {
+            result.add(apple);
+        }
+    }
+    return result;
+}
+</code></pre><p>上面的方式扩展性差，如果添加其他属性，不仅需要重新添加方法，还需要修改业务逻辑代码。</p>
 <p>我们可以使用策略模式来解决这个问题：</p>
 <pre><code>// 定义一个共通方法的接口
 public interface ApplePredicate {
@@ -141,8 +161,14 @@ public static List&lt;Apple&gt; filterApples(List&lt;Apple&gt; inventory, AppleP
     return result;
 }
 </code></pre><h1 id="1-lambda表达式"><a href="#1-lambda表达式" class="headerlink" title="1. lambda表达式"></a>1. lambda表达式</h1><p>实际上看上面第二种方式还是有点啰嗦，随着属性的增加，会导致类的数目不断增长。</p>
-<p>在实际开发中还会用到匿名内部类<br>    List<apple> redApples2 = filterApples(inventory, new ApplePredicate() {<br>        public boolean test(Apple a) {<br>            return a.getColor().equals(“red”);<br>        }<br>    });</apple></p>
-<p>上述用法在Android的控件监听器实现中使用较多，代码冗余，使用lambda表达式结合泛型，可以解决此类问题，做如下修改：</p>
+<p>在实际开发中还会用到匿名内部类</p>
+<pre><code>// 匿名内部类
+List&lt;Apple&gt; redApples2 = filterApples(inventory, new ApplePredicate() {
+    public boolean test(Apple a) {
+        return a.getColor().equals(&quot;red&quot;);
+    }
+});
+</code></pre><p>上述用法在Android的控件监听器实现中使用较多，代码冗余，使用lambda表达式结合泛型，可以解决此类问题，做如下修改：</p>
 <pre><code>// 定义一个共通方法的接口
 public interface Predicate&lt;T&gt; {
     boolean test(T t);
@@ -165,7 +191,7 @@ List&lt;Apple&gt; redApples2Lambda = filterApples(inventory, (Apple apple) -&gt;
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://github.com/devinyeen/devinyeen.github.io/2018/06/14/lambda_java8/" data-id="cjivvfbgk0002q4nrah1gutc7" class="article-share-link">Share</a>
+      <a data-url="https://github.com/devinyeen/devinyeen.github.io/2018/06/14/lambda_java8/" data-id="cjivvhdun0002ssnr4kvdqp26" class="article-share-link">Share</a>
       
       
     </footer>
