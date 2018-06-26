@@ -5,18 +5,18 @@
   
 
   
-  <title>java8引入的lambda表达式 | Devin&#39;s Blog</title>
+  <title>lambda表达式（一） | Devin&#39;s Blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="分类： 语言  0. 引入我们先看一个需求的实现，筛选一个列表中的绿苹果 // 判断绿苹果 public static List&amp;lt;Apple&amp;gt; filterGreenApples(List&amp;lt;Apple&amp;gt; inventory) {     List&amp;lt;Apple&amp;gt; result = new ArrayList&amp;lt;Apple&amp;gt;();     for (App">
 <meta property="og:type" content="article">
-<meta property="og:title" content="java8引入的lambda表达式">
+<meta property="og:title" content="lambda表达式（一）">
 <meta property="og:url" content="https://github.com/devinyeen/devinyeen.github.io/2018/06/14/lambda_java8/index.html">
 <meta property="og:site_name" content="Devin&#39;s Blog">
 <meta property="og:description" content="分类： 语言  0. 引入我们先看一个需求的实现，筛选一个列表中的绿苹果 // 判断绿苹果 public static List&amp;lt;Apple&amp;gt; filterGreenApples(List&amp;lt;Apple&amp;gt; inventory) {     List&amp;lt;Apple&amp;gt; result = new ArrayList&amp;lt;Apple&amp;gt;();     for (App">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2018-06-26T15:57:27.815Z">
+<meta property="og:updated_time" content="2018-06-26T16:15:12.326Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="java8引入的lambda表达式">
+<meta name="twitter:title" content="lambda表达式（一）">
 <meta name="twitter:description" content="分类： 语言  0. 引入我们先看一个需求的实现，筛选一个列表中的绿苹果 // 判断绿苹果 public static List&amp;lt;Apple&amp;gt; filterGreenApples(List&amp;lt;Apple&amp;gt; inventory) {     List&amp;lt;Apple&amp;gt; result = new ArrayList&amp;lt;Apple&amp;gt;();     for (App">
   
     <link rel="alternate" href="/atom.xml" title="Devin&#39;s Blog" type="application/atom+xml">
@@ -78,7 +78,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      java8引入的lambda表达式
+      lambda表达式（一）
     </h1>
   
 
@@ -160,7 +160,7 @@ public static List&lt;Apple&gt; filterApples(List&lt;Apple&gt; inventory, AppleP
     }
     return result;
 }
-</code></pre><h1 id="1-lambda表达式"><a href="#1-lambda表达式" class="headerlink" title="1. lambda表达式"></a>1. lambda表达式</h1><p>实际上看上面第二种方式还是有点啰嗦，随着属性的增加，会导致类的数目不断增长。</p>
+</code></pre><p>实际上看上面第二种方式还是有点啰嗦，随着属性的增加，会导致类的数目不断增长。</p>
 <p>在实际开发中还会用到匿名内部类</p>
 <pre><code>// 匿名内部类
 List&lt;Apple&gt; redApples2 = filterApples(inventory, new ApplePredicate() {
@@ -168,7 +168,8 @@ List&lt;Apple&gt; redApples2 = filterApples(inventory, new ApplePredicate() {
         return a.getColor().equals(&quot;red&quot;);
     }
 });
-</code></pre><p>上述用法在Android的控件监听器实现中使用较多，代码冗余，使用lambda表达式结合泛型，可以解决此类问题，做如下修改：</p>
+</code></pre><p>上述用法在Android的控件监听器实现中使用较多。</p>
+<h1 id="1-lambda表达式"><a href="#1-lambda表达式" class="headerlink" title="1. lambda表达式"></a>1. lambda表达式</h1><p>上述几种方法代码冗余，扩展性差，使用java8引入的lambda表达式结合泛型，可以解决此类问题，做如下修改：</p>
 <pre><code>// 定义一个共通方法的接口
 public interface Predicate&lt;T&gt; {
     boolean test(T t);
@@ -187,11 +188,13 @@ public static List&lt;T&gt; filterApples(List&lt;T&gt; inventory, Predicate&lt;T
 
 // 使用lambda表达式如下，非常简洁
 List&lt;Apple&gt; redApples2Lambda = filterApples(inventory, (Apple apple) -&gt; &quot;red&quot;.equals(apple.getColor()));
-</code></pre>
+</code></pre><p>简单归纳下lambda表达式实现与运用：<br>1、写一个接口；<br>2、传入接口，实现业务逻辑处理；<br>3、调用业务逻辑；</p>
+<p>后面我们仅需实现3，前面的不需要额外操心。</p>
+
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://github.com/devinyeen/devinyeen.github.io/2018/06/14/lambda_java8/" data-id="cjivvm6140002esnr82a7orgx" class="article-share-link">Share</a>
+      <a data-url="https://github.com/devinyeen/devinyeen.github.io/2018/06/14/lambda_java8/" data-id="cjivw7jfr0002uknrk7sd9dzx" class="article-share-link">Share</a>
       
       
     </footer>
@@ -240,7 +243,7 @@ List&lt;Apple&gt; redApples2Lambda = filterApples(inventory, (Apple apple) -&gt;
       <ul>
         
           <li>
-            <a href="/2018/06/14/lambda_java8/">java8引入的lambda表达式</a>
+            <a href="/2018/06/14/lambda_java8/">lambda表达式（一）</a>
           </li>
         
           <li>

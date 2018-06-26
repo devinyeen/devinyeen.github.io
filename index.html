@@ -79,7 +79,7 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2018/06/14/lambda_java8/">java8引入的lambda表达式</a>
+      <a class="article-title" href="/2018/06/14/lambda_java8/">lambda表达式（一）</a>
     </h1>
   
 
@@ -161,7 +161,7 @@ public static List&lt;Apple&gt; filterApples(List&lt;Apple&gt; inventory, AppleP
     }
     return result;
 }
-</code></pre><h1 id="1-lambda表达式"><a href="#1-lambda表达式" class="headerlink" title="1. lambda表达式"></a>1. lambda表达式</h1><p>实际上看上面第二种方式还是有点啰嗦，随着属性的增加，会导致类的数目不断增长。</p>
+</code></pre><p>实际上看上面第二种方式还是有点啰嗦，随着属性的增加，会导致类的数目不断增长。</p>
 <p>在实际开发中还会用到匿名内部类</p>
 <pre><code>// 匿名内部类
 List&lt;Apple&gt; redApples2 = filterApples(inventory, new ApplePredicate() {
@@ -169,7 +169,8 @@ List&lt;Apple&gt; redApples2 = filterApples(inventory, new ApplePredicate() {
         return a.getColor().equals(&quot;red&quot;);
     }
 });
-</code></pre><p>上述用法在Android的控件监听器实现中使用较多，代码冗余，使用lambda表达式结合泛型，可以解决此类问题，做如下修改：</p>
+</code></pre><p>上述用法在Android的控件监听器实现中使用较多。</p>
+<h1 id="1-lambda表达式"><a href="#1-lambda表达式" class="headerlink" title="1. lambda表达式"></a>1. lambda表达式</h1><p>上述几种方法代码冗余，扩展性差，使用java8引入的lambda表达式结合泛型，可以解决此类问题，做如下修改：</p>
 <pre><code>// 定义一个共通方法的接口
 public interface Predicate&lt;T&gt; {
     boolean test(T t);
@@ -188,11 +189,13 @@ public static List&lt;T&gt; filterApples(List&lt;T&gt; inventory, Predicate&lt;T
 
 // 使用lambda表达式如下，非常简洁
 List&lt;Apple&gt; redApples2Lambda = filterApples(inventory, (Apple apple) -&gt; &quot;red&quot;.equals(apple.getColor()));
-</code></pre>
+</code></pre><p>简单归纳下lambda表达式实现与运用：<br>1、写一个接口；<br>2、传入接口，实现业务逻辑处理；<br>3、调用业务逻辑；</p>
+<p>后面我们仅需实现3，前面的不需要额外操心。</p>
+
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://github.com/devinyeen/devinyeen.github.io/2018/06/14/lambda_java8/" data-id="cjivvm6140002esnr82a7orgx" class="article-share-link">Share</a>
+      <a data-url="https://github.com/devinyeen/devinyeen.github.io/2018/06/14/lambda_java8/" data-id="cjivw7jfr0002uknrk7sd9dzx" class="article-share-link">Share</a>
       
       
     </footer>
@@ -302,7 +305,7 @@ $ hexo new first-post
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://github.com/devinyeen/devinyeen.github.io/2018/05/04/deploy-hexo-on-github-page-chinese/" data-id="cjivvm60o0000esnrpv7o49dh" class="article-share-link">Share</a>
+      <a data-url="https://github.com/devinyeen/devinyeen.github.io/2018/05/04/deploy-hexo-on-github-page-chinese/" data-id="cjivw7jfb0000uknrg0w60dg7" class="article-share-link">Share</a>
       
       
     </footer>
@@ -347,7 +350,7 @@ $ hexo new first-post
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://github.com/devinyeen/devinyeen.github.io/2018/05/03/hello-world/" data-id="cjivvm6140001esnr6thkh898" class="article-share-link">Share</a>
+      <a data-url="https://github.com/devinyeen/devinyeen.github.io/2018/05/03/hello-world/" data-id="cjivw7jfb0001uknrvqdal4b5" class="article-share-link">Share</a>
       
       
     </footer>
@@ -388,7 +391,7 @@ $ hexo new first-post
       <ul>
         
           <li>
-            <a href="/2018/06/14/lambda_java8/">java8引入的lambda表达式</a>
+            <a href="/2018/06/14/lambda_java8/">lambda表达式（一）</a>
           </li>
         
           <li>
