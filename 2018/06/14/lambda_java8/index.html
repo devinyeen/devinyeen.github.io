@@ -14,7 +14,7 @@
 <meta property="og:site_name" content="Devin&#39;s Blog">
 <meta property="og:description" content="分类： 语言  0. 引入我们先看一个需求的实现，筛选一个列表中的绿苹果 // 判断绿苹果 public static List&amp;lt;Apple&amp;gt; filterGreenApples(List&amp;lt;Apple&amp;gt; inventory) {     List&amp;lt;Apple&amp;gt; result = new ArrayList&amp;lt;Apple&amp;gt;();     for (App">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2018-06-26T16:15:12.326Z">
+<meta property="og:updated_time" content="2018-06-26T16:17:34.563Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="lambda表达式（一）">
 <meta name="twitter:description" content="分类： 语言  0. 引入我们先看一个需求的实现，筛选一个列表中的绿苹果 // 判断绿苹果 public static List&amp;lt;Apple&amp;gt; filterGreenApples(List&amp;lt;Apple&amp;gt; inventory) {     List&amp;lt;Apple&amp;gt; result = new ArrayList&amp;lt;Apple&amp;gt;();     for (App">
@@ -189,12 +189,12 @@ public static List&lt;T&gt; filterApples(List&lt;T&gt; inventory, Predicate&lt;T
 // 使用lambda表达式如下，非常简洁
 List&lt;Apple&gt; redApples2Lambda = filterApples(inventory, (Apple apple) -&gt; &quot;red&quot;.equals(apple.getColor()));
 </code></pre><p>简单归纳下lambda表达式实现与运用：<br>1、写一个接口；<br>2、传入接口，实现业务逻辑处理；<br>3、调用业务逻辑；</p>
-<p>后面我们仅需实现3，前面的不需要额外操心。</p>
+<p>如果我们需要添加对其他属性的处理，我们仅需实现3，前面1、2不需要额外操心。</p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://github.com/devinyeen/devinyeen.github.io/2018/06/14/lambda_java8/" data-id="cjivw7jfr0002uknrk7sd9dzx" class="article-share-link">Share</a>
+      <a data-url="https://github.com/devinyeen/devinyeen.github.io/2018/06/14/lambda_java8/" data-id="cjivw9z9b0000p8nrpg3j0osj" class="article-share-link">Share</a>
       
       
     </footer>
