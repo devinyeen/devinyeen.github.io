@@ -89,9 +89,19 @@
       
         <p>分类： 语言</p>
 <hr>
-<h1 id="0-引入"><a href="#0-引入" class="headerlink" title="0. 引入"></a>0. 引入</h1><p>我们先看一个需求的实现，筛选一个列表中的绿苹果<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">public static List&lt;Apple&gt; filterGreenApples(List&lt;Apple&gt; inventory) &#123;</span><br><span class="line">    List&lt;Apple&gt; result = new ArrayList&lt;Apple&gt;();</span><br><span class="line">    for (Apple apple : inventory) &#123;</span><br><span class="line">        if (&quot;green&quot;.equals(apple.getColor())) &#123;</span><br><span class="line">            result.add(apple);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    return result;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>如果需求更进一步，颜色是变化的，需要根据颜色变化来筛选苹果<br>    public static List<apple> filterColorApples(List<apple> inventory, String color) {<br>        List<apple> result = new ArrayList<apple>();<br>        for (Apple apple : inventory) {<br>            if (color.equals(apple.getColor())) {<br>                result.add(apple);<br>            }<br>        }<br>        return result;<br>    }</apple></apple></apple></apple></p>
-<p>再进一步，需要对重量进行筛选<br>    public static List<apple> filterWeightApples(List<apple> inventory, int weight) {<br>        List<apple> result = new ArrayList<apple>();<br>        for (Apple apple : inventory) {<br>            if (apple.getWeight() &gt; weight) {<br>                result.add(apple);<br>            }<br>        }<br>        return result;<br>    }</apple></apple></apple></apple></p>
+<h1 id="0-引入"><a href="#0-引入" class="headerlink" title="0. 引入"></a>0. 引入</h1><p>我们先看一个需求的实现，筛选一个列表中的绿苹果</p>
+<pre><code>// 判断绿苹果
+public static List&lt;Apple&gt; filterGreenApples(List&lt;Apple&gt; inventory) {
+    List&lt;Apple&gt; result = new ArrayList&lt;Apple&gt;();
+    for (Apple apple : inventory) {
+        if (&quot;green&quot;.equals(apple.getColor())) {
+            result.add(apple);
+        }
+    }
+    return result;
+}
+</code></pre><p>如果需求更进一步，颜色是变化的，需要根据颜色变化来筛选苹果<br>    // 判断某种颜色的苹果<br>    public static List<apple> filterColorApples(List<apple> inventory, String color) {<br>        List<apple> result = new ArrayList<apple>();<br>        for (Apple apple : inventory) {<br>            if (color.equals(apple.getColor())) {<br>                result.add(apple);<br>            }<br>        }<br>        return result;<br>    }</apple></apple></apple></apple></p>
+<p>再进一步，需要对重量进行筛选<br>    // 判断某种重量的苹果<br>    public static List<apple> filterWeightApples(List<apple> inventory, int weight) {<br>        List<apple> result = new ArrayList<apple>();<br>        for (Apple apple : inventory) {<br>            if (apple.getWeight() &gt; weight) {<br>                result.add(apple);<br>            }<br>        }<br>        return result;<br>    }</apple></apple></apple></apple></p>
 <p>上面的方式扩展性差，如果添加其他属性，不仅需要重新添加方法，还需要修改业务逻辑代码。</p>
 <p>我们可以使用策略模式来解决这个问题：</p>
 <pre><code>// 定义一个共通方法的接口
@@ -156,7 +166,7 @@ List&lt;Apple&gt; redApples2Lambda = filterApples(inventory, (Apple apple) -&gt;
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://github.com/devinyeen/devinyeen.github.io/2018/06/14/lambda_java8/" data-id="cjivvboes0000b8nrlc8iftme" class="article-share-link">Share</a>
+      <a data-url="https://github.com/devinyeen/devinyeen.github.io/2018/06/14/lambda_java8/" data-id="cjivvfbgk0002q4nrah1gutc7" class="article-share-link">Share</a>
       
       
     </footer>
@@ -266,7 +276,7 @@ $ hexo new first-post
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://github.com/devinyeen/devinyeen.github.io/2018/05/04/deploy-hexo-on-github-page-chinese/" data-id="cjivvbofn0002b8nr4svffqr0" class="article-share-link">Share</a>
+      <a data-url="https://github.com/devinyeen/devinyeen.github.io/2018/05/04/deploy-hexo-on-github-page-chinese/" data-id="cjivvfbfo0000q4nrw37qu1lo" class="article-share-link">Share</a>
       
       
     </footer>
@@ -311,7 +321,7 @@ $ hexo new first-post
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://github.com/devinyeen/devinyeen.github.io/2018/05/03/hello-world/" data-id="cjivvbofn0001b8nrwu2m1d6d" class="article-share-link">Share</a>
+      <a data-url="https://github.com/devinyeen/devinyeen.github.io/2018/05/03/hello-world/" data-id="cjivvfbg40001q4nrdrkyifl2" class="article-share-link">Share</a>
       
       
     </footer>
